@@ -63,7 +63,9 @@ class MainActivity : AppCompatActivity() {
                 false
             }
         }
+    }
 
+    private fun fetchData() {
         lifecycleScope.launch {
             try {
                 val response = RetrofitClient.apiService.getTopArtists()
@@ -78,9 +80,11 @@ class MainActivity : AppCompatActivity() {
                 artists.clear()
                 artists.addAll(artistList)
                 adapter.notifyDataSetChanged()
+                layoutLoading.visibility = View.GONE
             } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(this@MainActivity, "Error fetching data", Toast.LENGTH_SHORT).show()
+                layoutLoading.visibility = View.GONE
+                layoutError.visibility = View.VISIBLE
             }
         }
     }
@@ -89,6 +93,7 @@ class MainActivity : AppCompatActivity() {
         if (NetworkUtils.isInternetAvailable(this)) {
             layoutError.visibility = View.GONE
             layoutLoading.visibility = View.VISIBLE
+            fetchData()
         } else {
             layoutLoading.visibility = View.GONE
             layoutError.visibility = View.VISIBLE

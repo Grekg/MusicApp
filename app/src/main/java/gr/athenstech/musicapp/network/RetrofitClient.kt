@@ -20,5 +20,7 @@ object RetrofitClient {
         .client(httpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+
+    val apiService: LastFmApiService = retrofit.create(LastFmApiService::class.java)
 }
 

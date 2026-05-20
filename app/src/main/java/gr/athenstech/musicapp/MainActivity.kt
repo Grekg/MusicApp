@@ -1,7 +1,9 @@
 package gr.athenstech.musicapp
 
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
+import gr.athenstech.musicapp.network.NetworkUtils
 import gr.athenstech.musicapp.network.RetrofitClient
 import gr.athenstech.musicapp.ui.Artist
 import gr.athenstech.musicapp.ui.ArtistAdapter
@@ -19,6 +22,8 @@ import kotlinx.coroutines.launch
 class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ArtistAdapter
+    private lateinit var layoutLoading: View
+    private lateinit var layoutError: View
     private val artists = mutableListOf<Artist>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +40,16 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = ArtistAdapter(artists)
         recyclerView.adapter = adapter
+
+        layoutLoading = findViewById(R.id.layoutLoading)
+        layoutError = findViewById(R.id.layoutError)
+        val retryButton = findViewById<Button>(R.id.retryButton)
+
+        retryButton.setOnClickListener {
+            checkInternet()
+        }
+
+        checkInternet()
 
         val searchInput = findViewById<TextInputEditText>(R.id.searchInput)
         searchInput.setOnEditorActionListener { _, actionId, _ ->
@@ -67,6 +82,16 @@ class MainActivity : AppCompatActivity() {
                 e.printStackTrace()
                 Toast.makeText(this@MainActivity, "Error fetching data", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    private fun checkInternet() {
+        if (NetworkUtils.isInternetAvailable(this)) {
+            layoutError.visibility = View.GONE
+            layoutLoading.visibility = View.VISIBLE
+        } else {
+            layoutLoading.visibility = View.GONE
+            layoutError.visibility = View.VISIBLE
         }
     }
 }

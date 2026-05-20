@@ -1,5 +1,6 @@
 package gr.athenstech.musicapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
@@ -14,6 +15,7 @@ import com.google.android.material.textfield.TextInputEditText
 import gr.athenstech.musicapp.network.RetrofitClient
 import gr.athenstech.musicapp.ui.Artist
 import gr.athenstech.musicapp.ui.ArtistAdapter
+import gr.athenstech.musicapp.ui.ArtistDetailActivity
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -33,7 +35,11 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recycler_top_artists)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = ArtistAdapter(artists)
+        adapter = ArtistAdapter(artists) { artist ->
+            val intent = Intent(this, ArtistDetailActivity::class.java)
+            intent.putExtra("ARTIST_NAME", artist.name)
+            startActivity(intent)
+        }
         recyclerView.adapter = adapter
 
         val searchInput = findViewById<TextInputEditText>(R.id.searchInput)

@@ -10,7 +10,10 @@ import gr.athenstech.musicapp.R
 
 data class Artist(val name: String, val imageUrl: String?)
 
-class ArtistAdapter(private var artists: List<Artist>) : RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>() {
+class ArtistAdapter(
+    private var artists: List<Artist>,
+    private val onArtistClick: (Artist) -> Unit
+) : RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>() {
 
     class ArtistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textArtistName: TextView = itemView.findViewById(R.id.text_artist_name)
@@ -27,6 +30,9 @@ class ArtistAdapter(private var artists: List<Artist>) : RecyclerView.Adapter<Ar
     override fun onBindViewHolder(holder: ArtistViewHolder, position: Int) {
         val artist = artists[position]
         holder.textArtistName.text = artist.name
+        holder.itemView.setOnClickListener {
+            onArtistClick(artist)
+        }
     }
 }
 

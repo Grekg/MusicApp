@@ -47,7 +47,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:layout_marginBottom="16dp"
             tools:text="Playcount: 1,234,567" />
+
+        <TextView
+            android:id="@+id/detail_text_top_tracks_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Top Tracks"
+            android:textAppearance="?attr/textAppearanceTitleLarge"
+            android:layout_marginBottom="12dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_top_tracks"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:listitem="@layout/item_track" />
 
     </LinearLayout>
 

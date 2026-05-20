@@ -41,7 +41,25 @@ class MainActivity : AppCompatActivity() {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val query = searchInput.text.toString()
                 if (query.isNotEmpty()) {
-                    Toast.makeText(this, "Searching for: $query", Toast.LENGTH_SHORT).show()
+                    lifecycleScope.launch {
+                        try {
+                            val response = RetrofitClient.apiService.searchArtists(query)
+                            val artistList = response.results?.artistmatches?.artist?.mapNotNull { artistItem ->
+                                if (!artistItem.name.isNullOrEmpty()) {
+                                    Artist(name = artistItem.name!!, imageUrl = null)
+                                } else {
+                                    null
+                                }
+                            } ?: emptyList()
+
+                            artists.clear()
+                            artists.addAll(artistList)
+                            adapter.notifyDataSetChanged()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            Toast.makeText(this@MainActivity, "Error searching artists", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
                 true
             } else {

@@ -8,6 +8,12 @@ interface LastFmApiService {
     suspend fun getTopArtists(
         @Query("method") method: String = "chart.gettopartists"
     ): ChartResponse
+
+    @GET(".")
+    suspend fun searchArtists(
+        @Query("artist") artist: String,
+        @Query("method") method: String = "artist.search"
+    ): SearchResponse
 }
 
 data class ChartResponse(
@@ -27,5 +33,17 @@ data class ArtistItem(
 data class ImageItem(
     val size: String?,
     val text: String?
+)
+
+data class SearchResponse(
+    val results: SearchResultsWrapper?
+)
+
+data class SearchResultsWrapper(
+    val artistmatches: ArtistMatches?
+)
+
+data class ArtistMatches(
+    val artist: List<ArtistItem>?
 )
 

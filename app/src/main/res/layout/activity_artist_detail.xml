@@ -61,9 +61,24 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_top_tracks"
             android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            tools:listitem="@layout/item_track" />
+
+        <TextView
+            android:id="@+id/detail_text_similar_artists_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Similar Artists"
+            android:textAppearance="?attr/textAppearanceTitleLarge"
+            android:layout_marginBottom="12dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_similar_artists"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            tools:listitem="@layout/item_track" />
+            tools:listitem="@layout/item_artist_card" />
 
     </LinearLayout>
 

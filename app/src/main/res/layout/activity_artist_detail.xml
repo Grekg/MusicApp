@@ -25,16 +25,17 @@
         android:padding="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/detail_image_artist"
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:contentDescription="Artist image"
             android:scaleType="centerCrop"
             android:layout_marginBottom="16dp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.MediumComponent"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/detail_text_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,7 +43,7 @@
             android:layout_marginBottom="8dp"
             tools:text="The Beatles" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/detail_text_stats"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,7 +51,16 @@
             android:layout_marginBottom="16dp"
             tools:text="Playcount: 1,234,567" />
 
-        <TextView
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_share"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Share Artist"
+            android:layout_marginBottom="16dp"
+            app:icon="@android:drawable/ic_menu_share" />
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/detail_text_top_tracks_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,7 +75,7 @@
             android:layout_marginBottom="16dp"
             tools:listitem="@layout/item_track" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/detail_text_similar_artists_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,4 +93,3 @@
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-

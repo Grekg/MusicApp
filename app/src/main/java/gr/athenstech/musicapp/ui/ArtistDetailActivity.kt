@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.button.MaterialButton
 import gr.athenstech.musicapp.R
 import gr.athenstech.musicapp.network.RetrofitClient
 import kotlinx.coroutines.launch
@@ -41,6 +42,15 @@ class ArtistDetailActivity : AppCompatActivity() {
         val artistName = intent.getStringExtra("ARTIST_NAME") ?: "Unknown Artist"
         val detailTextName = findViewById<TextView>(R.id.detail_text_name)
         detailTextName.text = artistName
+
+        val shareButton = findViewById<MaterialButton>(R.id.button_share)
+        shareButton.setOnClickListener {
+            val shareIntent = Intent()
+            shareIntent.action = Intent.ACTION_SEND
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out $artistName on MusicApp!")
+            startActivity(Intent.createChooser(shareIntent, "Share via"))
+        }
 
         recyclerTopTracks = findViewById(R.id.recycler_top_tracks)
         recyclerTopTracks.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

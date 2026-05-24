@@ -1,6 +1,7 @@
 package gr.athenstech.musicapp.ui
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,6 +45,9 @@ class ArtistDetailActivity : AppCompatActivity() {
         val detailTextName = findViewById<TextView>(R.id.detail_text_name)
         detailTextName.text = artistName
 
+        val textArtistBio = findViewById<TextView>(R.id.text_artist_bio)
+        val buttonReadMore = findViewById<MaterialButton>(R.id.button_read_more)
+
         val shareButton = findViewById<MaterialButton>(R.id.button_share)
         shareButton.setOnClickListener {
             val shareIntent = Intent()
@@ -68,6 +73,18 @@ class ArtistDetailActivity : AppCompatActivity() {
 
         lifecycleScope.launch {
             try {
+                val infoResponse = RetrofitClient.apiService.getArtistInfo(artistName)
+                val bioSummary = infoResponse.artist?.bio?.summary ?: ""
+                textArtistBio.text = HtmlCompat.fromHtml(bioSummary, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                
+                val artistUrl = infoResponse.artist?.url
+                buttonReadMore.setOnClickListener {
+                    if (!artistUrl.isNullOrEmpty()) {
+                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(artistUrl))
+                        startActivity(browserIntent)
+                    }
+                }
+
                 val tracksResponse = RetrofitClient.apiService.getArtistTopTracks(artistName)
                 val trackList = tracksResponse.toptracks?.track?.mapNotNull { trackItem ->
                     if (!trackItem.name.isNullOrEmpty()) {
@@ -75,7 +92,7 @@ class ArtistDetailActivity : AppCompatActivity() {
                     } else {
                         null
                     }
-                } ?: emptyList()
+                }?.take(5) ?: emptyList()
 
                 tracks.clear()
                 tracks.addAll(trackList)
@@ -105,6 +122,3 @@ class ArtistDetailActivity : AppCompatActivity() {
         return true
     }
 }
-
-
-

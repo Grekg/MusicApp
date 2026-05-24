@@ -1,5 +1,6 @@
 package gr.athenstech.musicapp.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -48,7 +49,11 @@ class ArtistDetailActivity : AppCompatActivity() {
 
         recyclerSimilarArtists = findViewById(R.id.recycler_similar_artists)
         recyclerSimilarArtists.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        artistAdapter = ArtistAdapter(similarArtists) {}
+        artistAdapter = ArtistAdapter(similarArtists) { artist ->
+            val intent = Intent(this, ArtistDetailActivity::class.java)
+            intent.putExtra("ARTIST_NAME", artist.name)
+            startActivity(intent)
+        }
         recyclerSimilarArtists.adapter = artistAdapter
 
         lifecycleScope.launch {

@@ -18,78 +18,103 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/detail_image_artist"
-            android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:contentDescription="Artist image"
-            android:scaleType="centerCrop"
-            android:layout_marginBottom="16dp"
-            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.MediumComponent"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/detail_text_name"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceHeadlineLarge"
-            android:layout_marginBottom="8dp"
-            tools:text="The Beatles" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/detail_text_stats"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceBodyLarge"
-            android:layout_marginBottom="16dp"
-            tools:text="Playcount: 1,234,567" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/detail_image_artist"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:contentDescription="Artist image"
+                android:scaleType="centerCrop"
+                android:src="@android:drawable/ic_menu_gallery"
+                android:layout_marginBottom="16dp"
+                app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.MediumComponent"
+                tools:srcCompat="@tools:sample/avatars" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_share"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Share Artist"
-            android:layout_marginBottom="16dp"
-            app:icon="@android:drawable/ic_menu_share" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/detail_text_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceHeadlineLarge"
+                android:layout_marginBottom="8dp"
+                tools:text="The Beatles" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/detail_text_top_tracks_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Top Tracks"
-            android:textAppearance="?attr/textAppearanceTitleLarge"
-            android:layout_marginBottom="12dp" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/detail_text_stats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceBodyLarge"
+                android:layout_marginBottom="8dp"
+                tools:text="Playcount: 1,234,567" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_top_tracks"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginBottom="16dp"
-            tools:listitem="@layout/item_track" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/text_artist_bio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:maxLines="5"
+                android:ellipsize="end"
+                android:layout_marginBottom="4dp"
+                tools:text="Artist bio summary goes here..." />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/detail_text_similar_artists_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Similar Artists"
-            android:textAppearance="?attr/textAppearanceTitleLarge"
-            android:layout_marginBottom="12dp" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_read_more"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Read more on Last.fm"
+                android:layout_marginBottom="16dp" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_similar_artists"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            tools:listitem="@layout/item_artist_card" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/detail_text_top_tracks_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Top Tracks"
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:layout_marginBottom="12dp" />
 
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_top_tracks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="16dp"
+                tools:listitem="@layout/item_track" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/detail_text_similar_artists_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Similar Artists"
+                android:textAppearance="?attr/textAppearanceTitleLarge"
+                android:layout_marginBottom="12dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_similar_artists"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginBottom="16dp"
+                tools:listitem="@layout/item_artist_card" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_share"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Share Artist"
+                app:icon="@android:drawable/ic_menu_share" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

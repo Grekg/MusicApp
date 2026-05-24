@@ -26,6 +26,12 @@ interface LastFmApiService {
         @Query("artist") artist: String,
         @Query("method") method: String = "artist.getsimilar"
     ): SimilarArtistsResponse
+
+    @GET(".")
+    suspend fun getArtistInfo(
+        @Query("artist") artist: String,
+        @Query("method") method: String = "artist.getinfo"
+    ): ArtistInfoResponse
 }
 
 data class ChartResponse(
@@ -80,3 +86,16 @@ data class SimilarArtistsWrapper(
     val artist: List<ArtistItem>?
 )
 
+data class ArtistInfoResponse(
+    val artist: ArtistDetail?
+)
+
+data class ArtistDetail(
+    val name: String?,
+    val url: String?,
+    val bio: ArtistBio?
+)
+
+data class ArtistBio(
+    val summary: String?
+)

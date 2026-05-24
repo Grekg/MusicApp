@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/detail_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/detail_appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/detail_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/detail_image_artist"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:contentDescription="Artist image"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="16dp"
+            app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.MediumComponent"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/detail_text_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceHeadlineLarge"
+            android:layout_marginBottom="8dp"
+            tools:text="The Beatles" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/detail_text_stats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?attr/textAppearanceBodyLarge"
+            android:layout_marginBottom="16dp"
+            tools:text="Playcount: 1,234,567" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button_share"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Share Artist"
+            android:layout_marginBottom="16dp"
+            app:icon="@android:drawable/ic_menu_share" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/detail_text_top_tracks_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Top Tracks"
+            android:textAppearance="?attr/textAppearanceTitleLarge"
+            android:layout_marginBottom="12dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_top_tracks"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginBottom="16dp"
+            tools:listitem="@layout/item_track" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/detail_text_similar_artists_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Similar Artists"
+            android:textAppearance="?attr/textAppearanceTitleLarge"
+            android:layout_marginBottom="12dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_similar_artists"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            tools:listitem="@layout/item_artist_card" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

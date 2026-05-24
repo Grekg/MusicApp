@@ -1,5 +1,6 @@
 package gr.athenstech.musicapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.EditorInfo
@@ -17,6 +18,7 @@ import gr.athenstech.musicapp.network.NetworkUtils
 import gr.athenstech.musicapp.network.RetrofitClient
 import gr.athenstech.musicapp.ui.Artist
 import gr.athenstech.musicapp.ui.ArtistAdapter
+import gr.athenstech.musicapp.ui.ArtistDetailActivity
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -38,7 +40,11 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.recycler_top_artists)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = ArtistAdapter(artists)
+        adapter = ArtistAdapter(artists) { artist ->
+            val intent = Intent(this, ArtistDetailActivity::class.java)
+            intent.putExtra("ARTIST_NAME", artist.name)
+            startActivity(intent)
+        }
         recyclerView.adapter = adapter
 
         layoutLoading = findViewById(R.id.layoutLoading)
@@ -56,7 +62,25 @@ class MainActivity : AppCompatActivity() {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val query = searchInput.text.toString()
                 if (query.isNotEmpty()) {
-                    Toast.makeText(this, "Searching for: $query", Toast.LENGTH_SHORT).show()
+                    lifecycleScope.launch {
+                        try {
+                            val response = RetrofitClient.apiService.searchArtists(query)
+                            val artistList = response.results?.artistmatches?.artist?.mapNotNull { artistItem ->
+                                if (!artistItem.name.isNullOrEmpty()) {
+                                    Artist(name = artistItem.name!!, imageUrl = null)
+                                } else {
+                                    null
+                                }
+                            } ?: emptyList()
+
+                            artists.clear()
+                            artists.addAll(artistList)
+                            adapter.notifyDataSetChanged()
+                        } catch (e: Exception) {
+                            e.printStackTrace()
+                            Toast.makeText(this@MainActivity, "Error searching artists", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
                 true
             } else {

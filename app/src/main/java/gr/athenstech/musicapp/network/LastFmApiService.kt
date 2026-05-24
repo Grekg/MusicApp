@@ -8,6 +8,24 @@ interface LastFmApiService {
     suspend fun getTopArtists(
         @Query("method") method: String = "chart.gettopartists"
     ): ChartResponse
+
+    @GET(".")
+    suspend fun searchArtists(
+        @Query("artist") artist: String,
+        @Query("method") method: String = "artist.search"
+    ): SearchResponse
+
+    @GET(".")
+    suspend fun getArtistTopTracks(
+        @Query("artist") artist: String,
+        @Query("method") method: String = "artist.gettoptracks"
+    ): TopTracksResponse
+
+    @GET(".")
+    suspend fun getSimilarArtists(
+        @Query("artist") artist: String,
+        @Query("method") method: String = "artist.getsimilar"
+    ): SimilarArtistsResponse
 }
 
 data class ChartResponse(
@@ -27,5 +45,38 @@ data class ArtistItem(
 data class ImageItem(
     val size: String?,
     val text: String?
+)
+
+data class SearchResponse(
+    val results: SearchResultsWrapper?
+)
+
+data class SearchResultsWrapper(
+    val artistmatches: ArtistMatches?
+)
+
+data class ArtistMatches(
+    val artist: List<ArtistItem>?
+)
+
+data class TopTracksResponse(
+    val toptracks: TopTracksWrapper?
+)
+
+data class TopTracksWrapper(
+    val track: List<TrackItem>?
+)
+
+data class TrackItem(
+    val name: String?,
+    val playcount: String?
+)
+
+data class SimilarArtistsResponse(
+    val similarartists: SimilarArtistsWrapper?
+)
+
+data class SimilarArtistsWrapper(
+    val artist: List<ArtistItem>?
 )
 

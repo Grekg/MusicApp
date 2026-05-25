@@ -33,20 +33,39 @@
                 android:id="@+id/detail_image_artist"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:contentDescription="Artist image"
+                android:contentDescription="@string/artist_image_desc"
                 android:scaleType="centerCrop"
                 android:src="@android:drawable/ic_menu_gallery"
                 android:layout_marginBottom="16dp"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.MediumComponent"
                 tools:srcCompat="@tools:sample/avatars" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/detail_text_name"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceHeadlineLarge"
-                android:layout_marginBottom="8dp"
-                tools:text="The Beatles" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/detail_text_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAppearance="?attr/textAppearanceHeadlineLarge"
+                    tools:text="The Beatles" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/action_save"
+                    style="@style/Widget.Material3.Button.TonalButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="0dp"
+                    app:icon="@android:drawable/btn_star_big_off"
+                    app:iconPadding="0dp"
+                    app:iconGravity="textStart" />
+
+            </LinearLayout>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/detail_text_stats"
@@ -71,14 +90,14 @@
                 style="@style/Widget.Material3.Button.TextButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Read more on Last.fm"
+                android:text="@string/read_more"
                 android:layout_marginBottom="16dp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/detail_text_top_tracks_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Top Tracks"
+                android:text="@string/top_tracks"
                 android:textAppearance="?attr/textAppearanceTitleLarge"
                 android:layout_marginBottom="12dp" />
 
@@ -94,7 +113,7 @@
                 android:id="@+id/detail_text_similar_artists_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Similar Artists"
+                android:text="@string/similar_artists"
                 android:textAppearance="?attr/textAppearanceTitleLarge"
                 android:layout_marginBottom="12dp" />
 
@@ -111,7 +130,7 @@
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Share Artist"
+                android:text="@string/share_artist"
                 app:icon="@android:drawable/ic_menu_share" />
 
         </LinearLayout>

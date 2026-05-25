@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.textfield.TextInputEditText
 import gr.athenstech.musicapp.network.NetworkUtils
 import gr.athenstech.musicapp.network.RetrofitClient
@@ -67,7 +68,7 @@ class MainActivity : AppCompatActivity() {
                             val response = RetrofitClient.apiService.searchArtists(query)
                             val artistList = response.results?.artistmatches?.artist?.mapNotNull { artistItem ->
                                 if (!artistItem.name.isNullOrEmpty()) {
-                                    Artist(name = artistItem.name!!, imageUrl = null)
+                                    Artist(name = artistItem.name, imageUrl = null)
                                 } else {
                                     null
                                 }
@@ -87,6 +88,19 @@ class MainActivity : AppCompatActivity() {
                 false
             }
         }
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.selectedItemId = R.id.nav_search
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_search -> true
+                R.id.nav_favorites -> {
+                    startActivity(Intent(this, CollectionActivity::class.java))
+                    false
+                }
+                else -> false
+            }
+        }
     }
 
     private fun fetchData() {
@@ -95,7 +109,7 @@ class MainActivity : AppCompatActivity() {
                 val response = RetrofitClient.apiService.getTopArtists()
                 val artistList = response.artists?.artist?.mapNotNull { artistItem ->
                     if (!artistItem.name.isNullOrEmpty()) {
-                        Artist(name = artistItem.name!!, imageUrl = null)
+                        Artist(name = artistItem.name, imageUrl = null)
                     } else {
                         null
                     }

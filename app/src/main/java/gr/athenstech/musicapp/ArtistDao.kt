@@ -17,4 +17,10 @@ interface ArtistDao {
 
     @Query("SELECT * FROM saved_artists")
     fun getAllArtists(): Flow<List<ArtistEntity>>
+
+    @Query("SELECT EXISTS(SELECT 1 FROM saved_artists WHERE artistName = :name)")
+    suspend fun isArtistSaved(name: String): Boolean
+
+    @Query("DELETE FROM saved_artists WHERE artistName = :name")
+    suspend fun deleteByName(name: String)
 }
